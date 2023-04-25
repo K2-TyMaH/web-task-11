@@ -17,7 +17,7 @@ async def read_contacts(skip: int = 0, limit: int = 25, db: Session = Depends(ge
     return contacts
 
 
-@router.get("/id/{contact_id}", response_model=ContactResponse)
+@router.get("/{contact_id}", response_model=ContactResponse)
 async def read_contact_id(contact_id: int, db: Session = Depends(get_db)):
     contact = await repository_contacts.get_contact_by_id(contact_id, db)
     if contact is None:
@@ -25,25 +25,9 @@ async def read_contact_id(contact_id: int, db: Session = Depends(get_db)):
     return contact
 
 
-@router.get("/firstname/{contact_firstname}", response_model=List[ContactResponse])
-async def read_contacts_firstname(contact_firstname: str, db: Session = Depends(get_db)):
-    contact = await repository_contacts.get_contacts_by_firstname(contact_firstname, db)
-    if contact is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Contact not found")
-    return contact
-
-
-@router.get("/lastname/{contact_lastname}", response_model=List[ContactResponse])
-async def read_contacts_lastname(contact_lastname: str, db: Session = Depends(get_db)):
-    contact = await repository_contacts.get_contacts_by_lastname(contact_lastname, db)
-    if contact is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Contact not found")
-    return contact
-
-
-@router.get("/email/{contact_email}", response_model=ContactResponse)
-async def read_contact_email(contact_email: str = 'kot@example.com', db: Session = Depends(get_db)):
-    contact = await repository_contacts.get_contact_by_email(contact_email, db)
+@router.get("/search/{information}", response_model=List[ContactResponse])
+async def read_contacts_info(information: str, db: Session = Depends(get_db)):
+    contact = await repository_contacts.get_contacts_by_info(information, db)
     if contact is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Contact not found")
     return contact
