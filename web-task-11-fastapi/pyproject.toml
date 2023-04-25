@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "web-task-11-fastapi"
+version = "0.1.0"
+description = ""
+authors = ["Vladyslav Chaban <dma.employee.v@gmail.com>"]
+readme = "README.md"
+packages = [{include = "web_task_11_fastapi"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.95.1"
+uvicorn = {extras = ["standard"], version = "^0.21.1"}
+sqlalchemy = "^2.0.10"
+alembic = "^1.10.3"
+psycopg2-binary = "^2.9.6"
+phonenumbers = "^8.13.10"
+sqlalchemy-utils = "^0.41.0"
+pydantic = {extras = ["email"], version = "^1.10.7"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
