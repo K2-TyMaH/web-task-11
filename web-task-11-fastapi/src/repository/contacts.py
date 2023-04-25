@@ -1,6 +1,7 @@
 from typing import List
 from datetime import datetime, timedelta
 
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
 from src.database.models import Contact
@@ -15,16 +16,10 @@ async def get_contact_by_id(contact_id: int, db: Session) -> Contact:
     return db.query(Contact).filter(Contact.id == contact_id).first()
 
 
-async def get_contacts_by_firstname(contact_firstname: str, db: Session) -> List[Contact]:
-    return db.query(Contact).filter(Contact.firstname == contact_firstname).all()
-
-
-async def get_contacts_by_lastname(contact_lastname: str, db: Session) -> List[Contact]:
-    return db.query(Contact).filter(Contact.lastname == contact_lastname).all()
-
-
-async def get_contact_by_email(contact_email: str, db: Session) -> Contact:
-    return db.query(Contact).filter(Contact.email == contact_email).first()
+async def get_contacts_by_info(information: str, db: Session) -> List[Contact]:
+    return db.query(Contact).filter(or_(Contact.firstname == information,
+                                        Contact.lastname == information,
+                                        Contact.email == information,)).all()
 
 
 async def get_contacts_7days_birthdays(db: Session) -> List[Contact]:
